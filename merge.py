@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+"""
+Merge a git hub pull request by its number
+"""
 import pygithub3
 
 import sys
