@@ -32,7 +32,15 @@ password = githubConfig("password")
 repo = githubConfig("repo")
 
 prNumber = int(sys.argv[1])
-msgFile = "/tmp/githubprmsg"
+
+g=pygithub3.Github(login=login, password=password, user=login, repo=repo)
+pr=g.pull_requests.get(prNumber)
+
+msgFile = "/tmp/githubprmsg"+prNumber
+if not os.path.exists(msgFile):
+    with open(msgFile,"w") as fh:
+        fh.write("#enter a message to merge pull request #%s\n"%pr.number)
+        fh.write("#from %s into %s\n\n"%(pr.head.ref, pr.base.ref))
 shell("gvim %s"%msgFile)
 lines=[]
 with open(msgFile) as fh:
@@ -41,8 +49,8 @@ with open(msgFile) as fh:
             lines.append(l)
 msg="".join(lines).strip()
 if msg!="":
-    g=pygithub3.Github(login=login, password=password, user=login, repo=repo)
     g.pull_requests.merge(prNumber, msg)
+    os.remove(msgFile)
 else:
     logging.warn("aborting because of empty msg")
     sys.exit(1)
