@@ -41,7 +41,7 @@ if not os.path.exists(msgFile):
     with open(msgFile,"w") as fh:
         fh.write("#enter a message to merge pull request #%s\n"%pr.number)
         fh.write("#from %s into %s\n\n"%(pr.head.ref, pr.base.ref))
-shell("gvim %s"%msgFile)
+shell("vim %s"%msgFile)
 lines=[]
 with open(msgFile) as fh:
     for l in fh:
