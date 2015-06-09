@@ -39,8 +39,9 @@ pr=g.pull_requests.get(prNumber)
 msgFile = "/tmp/githubprmsg%s"%prNumber
 if not os.path.exists(msgFile):
     with open(msgFile,"w") as fh:
-        fh.write("#enter a message to merge pull request #%s\n"%pr.number)
-        fh.write("#from %s into %s\n\n"%(pr.head["ref"], pr.base["ref"]))
+        fh.write("\n\n#enter a message to merge pull request #%s\n"%pr.number)
+        fh.write("#from %s into %s\n"%(pr.head["ref"], pr.base["ref"]))
+        fh.write("\n#an empty message will abort the merge\n")
 shell("gvim %s"%msgFile)
 lines=[]
 with open(msgFile) as fh:
