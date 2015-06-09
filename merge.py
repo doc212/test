@@ -36,7 +36,7 @@ prNumber = int(sys.argv[1])
 g=pygithub3.Github(login=login, password=password, user=login, repo=repo)
 pr=g.pull_requests.get(prNumber)
 
-msgFile = "/tmp/githubprmsg"+prNumber
+msgFile = "/tmp/githubprmsg%s"%prNumber
 if not os.path.exists(msgFile):
     with open(msgFile,"w") as fh:
         fh.write("#enter a message to merge pull request #%s\n"%pr.number)
